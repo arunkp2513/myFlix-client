@@ -3,7 +3,7 @@ import { MovieView } from '../movie-view/movie-view';
 // react.component is a template/blueprint for creating new components. 
 // export exposes the Mainview component which makes it available for use by other components/modules/files(import it)
 // React creates MainView component using the generic React.compnent
-import {MovieCard} from './movie-card/movie-card';
+import {MovieCard} from '../movie-card/movie-card';
 export class MainView extends React.Component {
 
     constructor(){ // constructor method is used to create component.
