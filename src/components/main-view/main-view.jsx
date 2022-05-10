@@ -1,5 +1,7 @@
 import React from 'react'; // Not a part of a component but required to create a component.
 import axios from 'axios'; // Used to fetch movies 
+import { LoginView } from '../login-view/login-view';
+import { RegistrationView } from '../registration-view/registration-view';
 import { MovieView } from '../movie-view/movie-view';
 import {MovieCard} from '../movie-card/movie-card';
 // react.component is a template/blueprint for creating new components. 
@@ -12,9 +14,11 @@ export class MainView extends React.Component {
         //This code is executed as soon as component is created.
         this.state = {
           movies: [],
-          selectedMovie : null
+          selectedMovie : null,
+          user: null,
+          register : null
         };
-     }
+     } 
 
      componentDidMount(){
          axios.get('https://myflix2513.herokuapp.com/movies')
@@ -24,18 +28,36 @@ export class MainView extends React.Component {
              });
          })
          .catch(error => {
-             console;error.log(error);
+             console.log(error);
          });
      }
 
-
+     
+     
       setSelectedMovie(newSelectedMovie){   
           this.setState({
               selectedMovie : newSelectedMovie
           });
       }
+
+      onLoggedIn(user) {
+        this.setState({
+          user
+        });
+      }
+
+      onRegister(registered) {
+        this.setState({
+          registered,
+        });
+      }
+
       render() {
-        const { movies, selectedMovie } = this.state;
+        const { movies, selectedMovie, user,register } = this.state;
+
+        if(register) return <RegistrationView onRegister = {register => this.onRegister(register)} />;
+
+        if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
     
     
         if (movies.length === 0) return <div className="main-view" />;
