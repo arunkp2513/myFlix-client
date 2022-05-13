@@ -2,6 +2,8 @@ import React from 'react'; // Not a part of a component but required to create a
 import axios from 'axios'; // Used to fetch movies
 import { MovieView } from '../movie-view/movie-view';
 import { MovieCard } from '../movie-card/movie-card';
+import { LoginView } from '../login-view/login-view';
+import { RegistrationView } from '../registration-view/registration-view';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 // react.component is a template/blueprint for creating new components.
@@ -15,6 +17,8 @@ export class MainView extends React.Component {
     this.state = {
       movies: [],
       selectedMovie: null,
+      user: null,
+      register: null,
     };
   }
 
@@ -36,8 +40,33 @@ export class MainView extends React.Component {
       selectedMovie: newSelectedMovie,
     });
   }
+
+  onLoggedIn(user) {
+    this.setState({
+      user,
+    });
+  }
+  onRegister(register) {
+    this.setState({
+      register,
+    });
+  }
+
   render() {
-    const { movies, selectedMovie } = this.state;
+    const { movies, selectedMovie, user, register } = this.state;
+    if (register) {
+      return (
+        <RegistrationView onRegister={register => this.onRegister(register)} />
+      );
+    }
+
+    if (!user)
+      return (
+        <LoginView
+          onLoggedIn={user => this.onLoggedIn(user)}
+          onRegister={register => this.onRegister(register)}
+        />
+      );
 
     if (movies.length === 0) return <div className="main-view" />;
 
