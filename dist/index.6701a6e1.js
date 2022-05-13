@@ -25331,7 +25331,7 @@ $parcel$ReactRefreshHelpers$35bf.prelude(module);
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-// react.component is a template/blueprint for creating new components. 
+// react.component is a template/blueprint for creating new components.
 // export exposes the Mainview component which makes it available for use by other components/modules/files(import it)
 // React creates MainView component using the generic React.compnent
 parcelHelpers.export(exports, "MainView", ()=>MainView
@@ -25339,7 +25339,7 @@ parcelHelpers.export(exports, "MainView", ()=>MainView
 var _jsxRuntime = require("react/jsx-runtime");
 var _react = require("react"); // Not a part of a component but required to create a component.
 var _reactDefault = parcelHelpers.interopDefault(_react);
-var _axios = require("axios"); // Used to fetch movies 
+var _axios = require("axios"); // Used to fetch movies
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _movieView = require("../movie-view/movie-view");
 var _movieCard = require("../movie-card/movie-card");
@@ -25349,6 +25349,7 @@ var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
 class MainView extends _reactDefault.default.Component {
     constructor(){
+        // constructor method is used to create component.
         super(); // related to OOP which initilazes the component's state.
         //This code is executed as soon as component is created.
         this.state = {
@@ -25362,7 +25363,7 @@ class MainView extends _reactDefault.default.Component {
                 movies: response.data
             });
         }).catch((error)=>{
-            error.log(error);
+            console.error.log(error);
         });
     }
     setSelectedMovie(newSelectedMovie) {
@@ -25376,7 +25377,7 @@ class MainView extends _reactDefault.default.Component {
             className: "main-view",
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 43
+                lineNumber: 42
             },
             __self: this
         }));
@@ -25384,14 +25385,14 @@ class MainView extends _reactDefault.default.Component {
             className: "main-view justify-content-md-center",
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 47
+                lineNumber: 45
             },
             __self: this,
             children: selectedMovie ? /*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
                 md: 8,
                 __source: {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 50
+                    lineNumber: 47
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsx(_movieView.MovieView, {
@@ -25401,7 +25402,7 @@ class MainView extends _reactDefault.default.Component {
                     },
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 51
+                        lineNumber: 48
                     },
                     __self: this
                 })
@@ -25409,7 +25410,7 @@ class MainView extends _reactDefault.default.Component {
                     md: 3,
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 55
+                        lineNumber: 57
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCard.MovieCard, {
@@ -25419,7 +25420,7 @@ class MainView extends _reactDefault.default.Component {
                         },
                         __source: {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 56
+                            lineNumber: 58
                         },
                         __self: this
                     }, movie._id)
