@@ -31,7 +31,7 @@ export class MainView extends React.Component {
         });
       })
       .catch(error => {
-        console.error.log(error);
+        console.log(error);
       });
   }
 
@@ -41,11 +41,31 @@ export class MainView extends React.Component {
     });
   }
 
-  onLoggedIn(user) {
+  onLoggedIn(authData) {
+    console.log(authData);
     this.setState({
-      user,
+      user: authData.user.Username,
     });
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.user.Username);
+    this.getMovies(authData.token);
   }
+
+  getMovies(token) {
+    axios
+      .get('https://myflix2513.herokuapp.com/movies', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(res => {
+        this.setState({
+          movies: res.data,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   onRegister(register) {
     this.setState({
       register,
