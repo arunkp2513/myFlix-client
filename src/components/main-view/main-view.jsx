@@ -23,16 +23,13 @@ export class MainView extends React.Component {
   }
 
   componentDidMount() {
-    axios
-      .get('https://myflix2513.herokuapp.com/movies')
-      .then(response => {
-        this.setState({
-          movies: response.data,
-        });
-      })
-      .catch(error => {
-        console.log(error);
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem('user'),
       });
+      this.getMovies(accessToken);
+    }
   }
 
   setSelectedMovie(newSelectedMovie) {
@@ -54,14 +51,14 @@ export class MainView extends React.Component {
   getMovies(token) {
     axios
       .get('https://myflix2513.herokuapp.com/movies', {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer${token}` },
       })
-      .then(res => {
+      .then(response => {
         this.setState({
-          movies: res.data,
+          movies: response.data,
         });
       })
-      .catch(function (error) {
+      .catch(error => {
         console.log(error);
       });
   }

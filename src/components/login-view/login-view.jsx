@@ -9,17 +9,18 @@ export function LoginView(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
+    /* Send a request to the server for authentication */
     axios
       .post('https://myflix2513.herokuapp.com/login', {
         Username: username,
         Password: password,
       })
-      .then(res => {
-        const data = res.data;
+      .then(response => {
+        const data = response.data;
         props.onLoggedIn(data);
       })
       .catch(e => {
-        console.log('no user found');
+        console.log('no such user');
       });
   };
 
@@ -32,12 +33,20 @@ export function LoginView(props) {
     <Form>
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
-        <Form.Control type="text" onChange={e => setUsername(e.target.value)} />
+        <Form.Control
+          type="text"
+          placeholder="Enter username"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+        />
       </Form.Group>
+
       <Form.Group controlId="formPassword">
-        <Form.Label>Password:</Form.Label>
+        <Form.Label>Password</Form.Label>
         <Form.Control
           type="password"
+          placeholder="Enter Password"
+          value={password}
           onChange={e => setPassword(e.target.value)}
         />
       </Form.Group>
