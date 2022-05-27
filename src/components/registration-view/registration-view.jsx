@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Container, Row, Col, Card, CardGroup } from 'react-bootstrap';
+import axios from 'axios';
 
 export function RegistrationView(props) {
   const [username, setUsername] = useState('');
@@ -14,6 +15,24 @@ export function RegistrationView(props) {
     console.log(username, password, email, birthday);
     props.onRegister(false);
   };
+
+  function handleRegister() {
+    axios
+      .post('https://myflix2513.herokuapp.com/users', {
+        Username: username,
+        Password: password,
+        Email: email,
+        Birthday: birthday,
+      })
+      .then(res => {
+        const data = res.data;
+        console.log(data);
+        window.open('/', '_self');
+      })
+      .catch(e => {
+        console.log('Error in registering the user');
+      });
+  }
 
   return (
     <Container>
@@ -74,7 +93,7 @@ export function RegistrationView(props) {
                 <Button
                   variant="primary mr-1"
                   type="submit"
-                  onClick={handleSubmit}
+                  onClick={handleRegister}
                 >
                   Submit
                 </Button>
