@@ -10,13 +10,54 @@ export function RegistrationView(props) {
   const [email, setEmail] = useState('');
   const [birthday, setBirthday] = useState('');
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log(username, password, email, birthday);
-    props.onRegister(false);
+  //Declaring hook for each input
+  const [usernameErr, setUsernameErr] = useState('');
+  const [passwordErr, setPasswordErr] = useState('');
+
+  //Validating user inputs
+
+  const validate = () => {
+    let isReq = true;
+    if (!username) {
+      setUsernameErr('Please enter UserName');
+      isReq = false;
+    } else if (username.length < 2) {
+      setUsernameErr('Username should be atleast 2 characters');
+      isReq = false;
+    }
+    if (!password) {
+      setPasswordErr('Please enter a password');
+      isReq = false;
+    } else if (password.length < 6) {
+      setPasswordErr('Password should be atleast 6 letters');
+      isReq = false;
+    }
+    return isReq;
   };
 
-  function handleRegister() {
+  const handleSubmit = e => {
+    e.preventDefault();
+    const isReq = validate();
+    if (isReq) {
+      axios
+        .post('https://myflix2513.herokuapp.com/users', {
+          Username: username,
+          Password: password,
+        })
+        .then(res => {
+          const data = res.data;
+          props.onLoggedIn(data);
+        })
+        .catch(e => {
+          console.log('no such user');
+        });
+    }
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const isReq = validate();
+    if (isReq) {
     axios
       .post('https://myflix2513.herokuapp.com/users', {
         Username: username,
@@ -42,7 +83,7 @@ export function RegistrationView(props) {
             <Card>
               <Card.Title>Please Register here!</Card.Title>
               <Form>
-                <Form.Group>
+                <Form.Group controlId="formUsername">
                   <Form.Label>Username :</Form.Label>
                   <Form.Control
                     input
@@ -52,9 +93,10 @@ export function RegistrationView(props) {
                     required
                     placeholder="Enter Username"
                   />
+                  {usernameErr && <p>{passwordErr}</p>}
                 </Form.Group>
 
-                <Form.Group>
+                <Form.Group controlId="formPassword">
                   <Form.Label>Password :</Form.Label>
                   <Form.Control
                     input
@@ -65,6 +107,7 @@ export function RegistrationView(props) {
                     placeholder="Enter Password"
                     minLength="8"
                   />
+                  {passwordErr && <p>{passwordErr}</p>}
                 </Form.Group>
 
                 <Form.Group>

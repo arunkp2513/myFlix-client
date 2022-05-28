@@ -26,7 +26,7 @@ export class MainView extends React.Component {
       register: null,
     };
   }
-
+  // Makin the login data to be present even after a refresh.
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
@@ -71,6 +71,9 @@ export class MainView extends React.Component {
   onLoggedOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    this.setState({
+      user: null,
+    });
   }
 
   onRegister(register) {
