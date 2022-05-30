@@ -10,14 +10,22 @@ import UpdateUser from './update-user';
 export function ProfileView(props) {
   const [user, setUser] = useState(props.user);
 
-  const [favoriteMoviesList, setFavoriteMoviesList] = useState([
-    ...props.movies.filter(m => props.user.favouriteMovies.includes(m._id)),
-  ]);
+  const [favoriteMoviesList, setFavoriteMoviesList] = useState([]);
 
   const token = localStorage.getItem('token');
   const currentUser = localStorage.getItem('user');
 
-  const getUser = () => {};
+  const getUser = () => {
+    axios
+      .get(`https://myflix2513.herokuapp.com/users/${currentUser}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(response => {
+        setUser(response.data);
+        setFavoriteMovies(response.data.FavoriteMovies);
+      })
+      .catch(error => console.error(error));
+  };
 
   const handleSubmit = e => {
     e.preventDefault();

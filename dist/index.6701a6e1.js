@@ -25351,6 +25351,7 @@ var _row = require("react-bootstrap/Row");
 var _rowDefault = parcelHelpers.interopDefault(_row);
 var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
+var _propTypes = require("prop-types");
 class MainView extends _reactDefault.default.Component {
     constructor(){
         // constructor method is used to create component.
@@ -25417,26 +25418,28 @@ class MainView extends _reactDefault.default.Component {
         return(/*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 95
+                lineNumber: 96
             },
             __self: this,
             children: /*#__PURE__*/ _jsxRuntime.jsx(_rowDefault.default, {
                 className: "main-view justify-content-md-center",
                 __source: {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 96
+                    lineNumber: 97
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactRouterDom.Routes, {
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 97
+                        lineNumber: 98
                     },
                     __self: this,
                     children: [
                         /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Route, {
-                            exact: true,
                             path: "/",
+                            element: /*#__PURE__*/ _jsxRuntime.jsx(_loginView.LoginView, {
+                            }),
+                            exact: true,
                             render: ()=>{
                                 if (!user) return(/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
                                     children: /*#__PURE__*/ _jsxRuntime.jsx(_loginView.LoginView, {
@@ -25456,12 +25459,14 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 98
+                                lineNumber: 99
                             },
                             __self: this
                         }),
                         /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Route, {
                             path: "/register",
+                            element: /*#__PURE__*/ _jsxRuntime.jsx(_registrationView.RegistrationView, {
+                            }),
                             render: ()=>{
                                 if (user) return(/*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Redirect, {
                                     to: "/"
@@ -25473,7 +25478,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 117
+                                lineNumber: 119
                             },
                             __self: this
                         }),
@@ -25499,7 +25504,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 129
+                                lineNumber: 132
                             },
                             __self: this
                         }),
@@ -25525,7 +25530,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 151
+                                lineNumber: 154
                             },
                             __self: this
                         }),
@@ -25551,7 +25556,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 175
+                                lineNumber: 178
                             },
                             __self: this
                         }),
@@ -25572,7 +25577,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 199
+                                lineNumber: 202
                             },
                             __self: this
                         })
@@ -25588,7 +25593,7 @@ class MainView extends _reactDefault.default.Component {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"4JSGq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"acbzt","../movie-view/movie-view":"ikZdr","../movie-card/movie-card":"6EiBJ","axios":"iYoWk","react-bootstrap/Row":"c0x1x","react-bootstrap/Col":"fbam0","../login-view/login-view":"054li","../registration-view/registration-view":"aP2YV","react-router-dom":"kjA5T","../profile-view/profile-view":"2E7Aw"}],"ikZdr":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"4JSGq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"acbzt","../movie-view/movie-view":"ikZdr","../movie-card/movie-card":"6EiBJ","axios":"iYoWk","react-bootstrap/Row":"c0x1x","react-bootstrap/Col":"fbam0","../login-view/login-view":"054li","../registration-view/registration-view":"aP2YV","react-router-dom":"kjA5T","../profile-view/profile-view":"2E7Aw","prop-types":"1tgq3"}],"ikZdr":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$3741 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -44127,13 +44132,19 @@ var _s = $RefreshSig$();
 function ProfileView(props) {
     _s();
     const [user, setUser] = _react.useState(props.user);
-    const [favoriteMoviesList, setFavoriteMoviesList] = _react.useState([
-        ...props.movies.filter((m)=>props.user.favouriteMovies.includes(m._id)
-        ), 
-    ]);
+    const [favoriteMoviesList, setFavoriteMoviesList] = _react.useState([]);
     const token = localStorage.getItem('token');
     const currentUser = localStorage.getItem('user');
     const getUser = ()=>{
+        _axiosDefault.default.get(`https://myflix2513.herokuapp.com/users/${currentUser}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setUser(response.data);
+            setFavoriteMovies(response.data.FavoriteMovies);
+        }).catch((error)=>console.error(error)
+        );
     };
     const handleSubmit = (e)=>{
         e.preventDefault();
@@ -44157,7 +44168,7 @@ function ProfileView(props) {
     return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
         __source: {
             fileName: "src/components/profile-view/profile-view.jsx",
-            lineNumber: 51
+            lineNumber: 59
         },
         __self: this,
         children: [
@@ -44166,7 +44177,7 @@ function ProfileView(props) {
                 email: user.email,
                 __source: {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 52
+                    lineNumber: 60
                 },
                 __self: this
             }),
@@ -44174,7 +44185,7 @@ function ProfileView(props) {
                 favouriteMovieList: favoriteMoviesList,
                 __source: {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 53
+                    lineNumber: 61
                 },
                 __self: this
             }),
@@ -44183,14 +44194,14 @@ function ProfileView(props) {
                 handleUpdate: handleUpdate,
                 __source: {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 54
+                    lineNumber: 62
                 },
                 __self: this
             })
         ]
     }));
 }
-_s(ProfileView, "UMIvZ3vX40nt9nuozDde6mEslEI=");
+_s(ProfileView, "aKoWkXM4T34PL8WhF+P2lmWo9cs=");
 _c = ProfileView;
 var _c;
 $RefreshReg$(_c, "ProfileView");

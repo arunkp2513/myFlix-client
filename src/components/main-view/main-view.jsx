@@ -16,6 +16,7 @@ import { ProfileView } from '../profile-view/profile-view';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { element } from 'prop-types';
 // react.component is a template/blueprint for creating new components.
 // export exposes the Mainview component which makes it available for use by other components/modules/files(import it)
 // React creates MainView component using the generic React.compnent
@@ -96,8 +97,9 @@ export class MainView extends React.Component {
         <Row className="main-view justify-content-md-center">
           <Routes>
             <Route
-              exact
               path="/"
+              element={<LoginView />}
+              exact
               render={() => {
                 if (!user)
                   return (
@@ -116,6 +118,7 @@ export class MainView extends React.Component {
 
             <Route
               path="/register"
+              element={<RegistrationView />}
               render={() => {
                 if (user) return <Redirect to="/" />;
                 return (
