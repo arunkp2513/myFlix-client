@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Container, Row, Col } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 
 export class DirectorView extends React.Component {
   render() {
