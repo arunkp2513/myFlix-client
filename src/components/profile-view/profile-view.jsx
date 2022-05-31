@@ -43,7 +43,21 @@ export function ProfileView(props) {
       });
   };
 
-  const removeFav = id => {};
+  const removeFav = id => {
+    axios
+      .delete(
+        `https://myflix2513.herokuapp.com/users/${currentUser.userName}/movies/${id}`
+      )
+      .then(() => {
+        const newFavourites = favoriteMoviesList.filter(
+          movie => movie._id != id
+        );
+        setFavoriteMoviesList(newFavourites);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
 
   const handleUpdate = e => {
     setUser({
@@ -53,13 +67,22 @@ export function ProfileView(props) {
     });
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <div>
       <UserInfo name={user.name} email={user.email} />
-      <FavoriteMovies favouriteMovieList={favoriteMoviesList} />
+      <FavoriteMovies
+        favouriteMovieList={favoriteMoviesList}
+        removeFav={removeFav}
+      />
       <UpdateUser handleSubmit={handleSubmit} handleUpdate={handleUpdate} />
+      <Button variant="danger" type="submit" onClick={deleteProfile}>
+        Delete Profile
+      </Button>
+      <Nav.Link href="/">Back to Movies</Nav.Link>
     </div>
   );
 }
