@@ -17,7 +17,7 @@ import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Navbar } from '../navbar/navbar';
+import { Menubar } from '../navbar/navbar';
 import { element } from 'prop-types';
 // react.component is a template/blueprint for creating new components.
 // export exposes the Mainview component which makes it available for use by other components/modules/files(import it)
@@ -96,7 +96,7 @@ export class MainView extends React.Component {
 
     return (
       <Router>
-        <Navbar user={user} />
+        <Menubar user={user} />
         <Row className="main-view justify-content-md-center">
           <Routes>
             <Route
