@@ -100,9 +100,9 @@ export class MainView extends React.Component {
         <Row className="main-view justify-content-md-center">
           <Routes>
             <Route
+              exact
               path="/"
               element={<LoginView />}
-              exact
               render={() => {
                 if (!user)
                   return (
@@ -203,6 +203,7 @@ export class MainView extends React.Component {
             />
 
             <Route
+              element={<ProfileView />}
               path="/users/:username"
               render={({ history, match }) => {
                 if (!user)

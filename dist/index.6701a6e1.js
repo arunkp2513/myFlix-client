@@ -25448,10 +25448,10 @@ class MainView extends _reactDefault.default.Component {
                         __self: this,
                         children: [
                             /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Route, {
+                                exact: true,
                                 path: "/",
                                 element: /*#__PURE__*/ _jsxRuntime.jsx(_loginView.LoginView, {
                                 }),
-                                exact: true,
                                 render: ()=>{
                                     if (!user) return(/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
                                         children: /*#__PURE__*/ _jsxRuntime.jsx(_loginView.LoginView, {
@@ -25573,6 +25573,8 @@ class MainView extends _reactDefault.default.Component {
                                 __self: this
                             }),
                             /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Route, {
+                                element: /*#__PURE__*/ _jsxRuntime.jsx(_profileView.ProfileView, {
+                                }),
                                 path: "/users/:username",
                                 render: ({ history , match  })=>{
                                     if (!user) return(/*#__PURE__*/ _jsxRuntime.jsx(_loginView.LoginView, {
@@ -32842,7 +32844,7 @@ var _reactBootstrap = require("react-bootstrap");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _s = $RefreshSig$();
-function RegistrationView(props) {
+function RegistrationView() {
     _s();
     const [username, setUsername] = _react.useState('');
     const [password, setPassword] = _react.useState('');
@@ -32870,19 +32872,24 @@ function RegistrationView(props) {
         }
         return isReq;
     };
-    const handleSubmit = (e)=>{
-        e.preventDefault();
-        const isReq = validate();
-        if (isReq) _axiosDefault.default.post('https://myflix2513.herokuapp.com/users', {
-            Username: username,
-            Password: password
-        }).then((res)=>{
-            const data = res.data;
-            props.onLoggedIn(data);
-        }).catch((e1)=>{
-            console.log('no such user');
-        });
-    };
+    //const handleSubmit = e => {
+    // e.preventDefault();
+    // const isReq = validate();
+    // if (isReq) {
+    //  axios
+    //    .post('https://myflix2513.herokuapp.com/login', {
+    //      Username: username,
+    //     Password: password,
+    //   })
+    //   .then(res => {
+    //    const data = res.data;
+    //     props.onLoggedIn(data);
+    //  })
+    //   .catch(e => {
+    //    console.log('no such user');
+    //   });
+    // }
+    //};
     const handleRegister = (e)=>{
         e.preventDefault();
         const isReq = validate();
@@ -44194,8 +44201,8 @@ function ProfileView(props) {
         __self: this,
         children: [
             /*#__PURE__*/ _jsxRuntime.jsx(_userInfoDefault.default, {
-                name: user.name,
-                email: user.email,
+                Name: user.name,
+                Email: user.email,
                 __source: {
                     fileName: "src/components/profile-view/profile-view.jsx",
                     lineNumber: 76

@@ -73,7 +73,7 @@ export function ProfileView(props) {
 
   return (
     <div>
-      <UserInfo name={user.name} email={user.email} />
+      <UserInfo Name={user.name} Email={user.email} />
       <FavoriteMovies
         favouriteMovieList={favoriteMoviesList}
         removeFav={removeFav}

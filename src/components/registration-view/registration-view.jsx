@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { Container, Row, Col, Card, CardGroup } from 'react-bootstrap';
 import axios from 'axios';
 
-export function RegistrationView(props) {
+export function RegistrationView() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -35,24 +35,24 @@ export function RegistrationView(props) {
     return isReq;
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    const isReq = validate();
-    if (isReq) {
-      axios
-        .post('https://myflix2513.herokuapp.com/users', {
-          Username: username,
-          Password: password,
-        })
-        .then(res => {
-          const data = res.data;
-          props.onLoggedIn(data);
-        })
-        .catch(e => {
-          console.log('no such user');
-        });
-    }
-  };
+  //const handleSubmit = e => {
+  // e.preventDefault();
+  // const isReq = validate();
+  // if (isReq) {
+  //  axios
+  //    .post('https://myflix2513.herokuapp.com/login', {
+  //      Username: username,
+  //     Password: password,
+  //   })
+  //   .then(res => {
+  //    const data = res.data;
+  //     props.onLoggedIn(data);
+  //  })
+  //   .catch(e => {
+  //    console.log('no such user');
+  //   });
+  // }
+  //};
 
   const handleRegister = e => {
     e.preventDefault();
