@@ -35,12 +35,7 @@ export function Menubar({ user }) {
           <Nav className="ml-auto">
             {isAuth() && <Nav.Link href={`/users/$(user)`}>{user}</Nav.Link>}
             {isAuth() && (
-              <Button
-                variant="link"
-                onClick={() => {
-                  this.onLoggedOut();
-                }}
-              >
+              <Button variant="link" onClick={onLoggedOut}>
                 Logout
               </Button>
             )}

@@ -5,8 +5,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 export function LoginView(props) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -23,11 +23,6 @@ export function LoginView(props) {
       .catch(e => {
         console.log('no such user');
       });
-  };
-
-  const handleRegister = e => {
-    e.preventDefault();
-    props.onRegister(true);
   };
 
   return (

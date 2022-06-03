@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Nav } from 'react-router-dom';
 import UserInfo from './user-info';
 import FavoriteMovies from './favorite-movies';
 import UpdateUser from './update-user';
@@ -22,25 +22,9 @@ export function ProfileView(props) {
       })
       .then(response => {
         setUser(response.data);
-        setFavoriteMovies(response.data.FavoriteMovies);
+        setFavoriteMoviesList(response.data.FavoriteMovies);
       })
       .catch(error => console.error(error));
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    axios
-      .put(
-        'https://myflix2513.herokuapp.com/users/${currentUser.userName}',
-        user
-      )
-      .then(res => {
-        alert('profile Updated');
-      })
-      .catch(e => {
-        console.log(e);
-      });
   };
 
   const removeFav = id => {
@@ -59,30 +43,35 @@ export function ProfileView(props) {
       });
   };
 
-  const handleUpdate = e => {
-    setUser({
-      [e.target.name]: e.target.value,
-      [e.target.password]: e.target.value,
-      [e.target.Email]: e.target.value,
-    });
-  };
-
   useEffect(() => {
     getUser();
   }, []);
 
+  const deleteProfile = () => {
+    axios
+      .delete(`https://myflix2513.herokuapp.com/users/${currentUser}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(() => {
+        alert(`The account ${user.Username} was successfully deleted.`);
+        localStorage.clear();
+        window.open('/register', '_self');
+      })
+      .catch(error => console.error(error));
+  };
+
   return (
     <div>
-      <UserInfo Name={user.name} Email={user.email} />
+      <UserInfo user={user} />
       <FavoriteMovies
         favouriteMovieList={favoriteMoviesList}
         removeFav={removeFav}
       />
-      <UpdateUser handleSubmit={handleSubmit} handleUpdate={handleUpdate} />
+      <UpdateUser user={user} />
       <Button variant="danger" type="submit" onClick={deleteProfile}>
         Delete Profile
       </Button>
-      <Nav.Link href="/">Back to Movies</Nav.Link>
+      <Link to={`/`}> Back to Movies</Link>
     </div>
   );
 }

@@ -19,7 +19,7 @@ export function RegistrationView() {
   const validate = () => {
     let isReq = true;
     if (!username) {
-      setUsernameErr('Please enter UserName');
+      setUsernameErr('Please enter Username');
       isReq = false;
     } else if (username.length < 2) {
       setUsernameErr('Username should be atleast 2 characters');
@@ -35,25 +35,6 @@ export function RegistrationView() {
     return isReq;
   };
 
-  //const handleSubmit = e => {
-  // e.preventDefault();
-  // const isReq = validate();
-  // if (isReq) {
-  //  axios
-  //    .post('https://myflix2513.herokuapp.com/login', {
-  //      Username: username,
-  //     Password: password,
-  //   })
-  //   .then(res => {
-  //    const data = res.data;
-  //     props.onLoggedIn(data);
-  //  })
-  //   .catch(e => {
-  //    console.log('no such user');
-  //   });
-  // }
-  //};
-
   const handleRegister = e => {
     e.preventDefault();
     const isReq = validate();
@@ -68,84 +49,86 @@ export function RegistrationView() {
         .then(res => {
           const data = res.data;
           console.log(data);
+          alert('Registration successful, please login!');
           window.open('/', '_self');
         })
         .catch(e => {
+          console.log(e);
           console.log('Error in registering the user');
         });
     }
-
-    return (
-      <Container>
-        <Row>
-          <Col>
-            <CardGroup>
-              <Card>
-                <Card.Title>Please Register here!</Card.Title>
-                <Form>
-                  <Form.Group controlId="formUsername">
-                    <Form.Label>Username :</Form.Label>
-                    <Form.Control
-                      input
-                      type="text"
-                      value={username}
-                      onChange={e => setUsername(e.target.value)}
-                      required
-                      placeholder="Enter Username"
-                    />
-                    {usernameErr && <p>{passwordErr}</p>}
-                  </Form.Group>
-
-                  <Form.Group controlId="formPassword">
-                    <Form.Label>Password :</Form.Label>
-                    <Form.Control
-                      input
-                      type="password"
-                      value={password}
-                      onChange={e => setPassword(e.target.value)}
-                      required
-                      placeholder="Enter Password"
-                      minLength="8"
-                    />
-                    {passwordErr && <p>{passwordErr}</p>}
-                  </Form.Group>
-
-                  <Form.Group>
-                    <Form.Label>E-mail :</Form.Label>
-                    <Form.Control
-                      input
-                      type="email"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      required
-                      placeholder="Enter E-mail"
-                    />
-                  </Form.Group>
-
-                  <Form.Group>
-                    <Form.Label>Birthday : </Form.Label>
-                    <Form.Control
-                      input
-                      type="date"
-                      value={birthday}
-                      onChange={e => setBirthday(e.target.value)}
-                      placeholder="Enter Birthday"
-                    />
-                  </Form.Group>
-
-                  <Button
-                    variant="primary mr-1"
-                    type="submit"
-                    onClick={handleRegister}
-                  >
-                    Submit
-                  </Button>
-                </Form>
-              </Card>
-            </CardGroup>
-          </Col>
-        </Row>
-      </Container>
-    );
   };
+
+  return (
+    <Container>
+      <Row>
+        <Col>
+          <CardGroup>
+            <Card>
+              <Card.Title>Please Register here!</Card.Title>
+              <Form>
+                <Form.Group controlId="formUsername">
+                  <Form.Label>Username :</Form.Label>
+                  <Form.Control
+                    input
+                    type="text"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                    required
+                    placeholder="Enter Username"
+                  />
+                  {usernameErr && <p>{usernameErr}</p>}
+                </Form.Group>
+
+                <Form.Group controlId="formPassword">
+                  <Form.Label>Password :</Form.Label>
+                  <Form.Control
+                    input
+                    type="password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    required
+                    placeholder="Enter Password"
+                    minLength="8"
+                  />
+                  {passwordErr && <p>{passwordErr}</p>}
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>E-mail :</Form.Label>
+                  <Form.Control
+                    input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    required
+                    placeholder="Enter E-mail"
+                  />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Birthday : </Form.Label>
+                  <Form.Control
+                    input
+                    type="date"
+                    value={birthday}
+                    onChange={e => setBirthday(e.target.value)}
+                    placeholder="Enter Birthday"
+                  />
+                </Form.Group>
+
+                <Button
+                  variant="primary mr-1"
+                  type="submit"
+                  onClick={handleRegister}
+                >
+                  Submit
+                </Button>
+              </Form>
+            </Card>
+          </CardGroup>
+        </Col>
+      </Row>
+    </Container>
+  );
 }

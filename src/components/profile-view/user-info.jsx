@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function UserInfo({ email, name }) {
+export default function UserInfo({ user }) {
   return (
     <>
-      <p> User : {name} </p>
-      <p> Email: {email}</p>
+      <h2> User : {user.Username} </h2>
+      <h2> Email: {user.Email}</h2>
     </>
   );
 }
