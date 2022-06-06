@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import axios from 'axios';
 
 export default function UpdateUser(props) {
@@ -7,12 +6,13 @@ export default function UpdateUser(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+
   const handleSubmit = e => {
     e.preventDefault();
     const token = localStorage.getItem('token');
     axios
       .put(
-        `https://myflix2513.herokuapp.com/users/${user.Username}`,
+        'https://myflix2513.herokuapp.com/users/${user.Username}',
         {
           Username: username,
           Password: password,
