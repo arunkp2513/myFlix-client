@@ -1,12 +1,7 @@
 import React from 'react'; // Not a part of a component but required to create a component.
 import axios from 'axios'; // Used to fetch movies
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Routes,
-} from 'react-router-dom'; //used to set up router.
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'; //used to set up router.
 
 import { MovieView } from '../movie-view/movie-view';
 import { MovieCard } from '../movie-card/movie-card';
