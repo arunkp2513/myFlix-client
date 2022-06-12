@@ -10,13 +10,14 @@ export default function UpdateUser(props) {
   const handleSubmit = e => {
     e.preventDefault();
     const token = localStorage.getItem('token');
+
     axios
       .put(
-        'https://myflix2513.herokuapp.com/users/${user.Username}',
+        `https://myflix2513.herokuapp.com/users/${user.Username}`,
         {
-          Username: username,
-          Password: password,
-          Email: email,
+          username: this.state.username,
+          password: this.state.password,
+          email: this.state.email,
         },
         {
           headers: { Authorization: `Bearer ${token}` },

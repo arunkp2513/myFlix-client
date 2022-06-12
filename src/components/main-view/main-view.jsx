@@ -3,8 +3,11 @@ import axios from 'axios'; // Used to fetch movies
 
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'; //used to set up router.
 
+import { setMovies, setUser } from '../../actions/actions';
+import MoviesList from '../movies-list/movies-list';
+
 import { MovieView } from '../movie-view/movie-view';
-import { MovieCard } from '../movie-card/movie-card';
+//import { MovieCard } from '../movie-card/movie-card';
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { ProfileView } from '../profile-view/profile-view';
@@ -14,19 +17,16 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Menubar } from '../navbar/navbar';
 import { element } from 'prop-types';
-// react.component is a template/blueprint for creating new components.
-// export exposes the Mainview component which makes it available for use by other components/modules/files(import it)
-// React creates MainView component using the generic React.compnent
+import { connect } from 'react-redux';
 
-export class MainView extends React.Component {
+class MainView extends React.Component {
   constructor() {
     // constructor method is used to create component.
     super(); // related to OOP which initilazes the component's state.
     //This code is executed as soon as component is created.
     this.state = {
-      movies: [],
       selectedMovie: null,
-      user: null,
+
       register: null,
     };
   }
@@ -48,24 +48,21 @@ export class MainView extends React.Component {
   }
 
   onLoggedIn(authData) {
-    console.log(authData);
-    this.setState({
-      user: authData.user.Username,
-    });
-
+    const { setUser } = this.props;
+    setUser(authData.user.username);
     localStorage.setItem('token', authData.token);
-    localStorage.setItem('user', authData.user.Username);
+    localStorage.setItem('user', authData.user.username);
     this.getMovies(authData.token);
   }
+
+  // As soon as we ge the response from the get request, we pass it to the setMovies
   getMovies(token) {
     axios
       .get('https://myflix2513.herokuapp.com/movies', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
-        this.setState({
-          movies: response.data,
-        });
+        this.props.setMovies(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -73,11 +70,10 @@ export class MainView extends React.Component {
   }
 
   onLoggedOut() {
+    const { setUser } = this.props;
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    this.setState({
-      user: null,
-    });
+    setUser(null);
   }
 
   onRegister(register) {
@@ -87,7 +83,7 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user } = this.state;
+    let { movies, user } = this.props;
 
     return (
       <Router>
@@ -104,11 +100,7 @@ export class MainView extends React.Component {
                   </Col>
                 );
               if (movies.length === 0) return <div className="main-view" />;
-              return movies.map(m => (
-                <Col md={3} key={m._id}>
-                  <MovieCard movie={m} />
-                </Col>
-              ));
+              return <MoviesList movies={movies} />;
             }}
           />
 
@@ -208,3 +200,9 @@ export class MainView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = state => {
+  return { movies: state.movies, user: state.user };
+};
+
+export default connect(mapStateToProps, { setMovies, setUser })(MainView);

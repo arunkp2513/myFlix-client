@@ -6,6 +6,8 @@ import { Link, Nav } from 'react-router-dom';
 import UserInfo from './user-info';
 import FavoriteMovies from './favorite-movies';
 import UpdateUser from './update-user';
+import { setUser, updateUser } from '../../actions/actions';
+import { connect } from 'react-redux';
 
 export function ProfileView(props) {
   const [user, setUser] = useState(props.user);

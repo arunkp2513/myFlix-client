@@ -1,7 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {MainView} from './components/main-view/main-view';
+import MainView from './components/main-view/main-view';
 import Container from 'react-bootstrap/Container';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import moviesApp from './reducers/reducers';
+import { devToolsEnhancer } from 'redux-devtools-extension';
+
+//creating store
+const store = createStore(moviesApp, devToolsEnhancer());
 
 // Import statement to indicate that you need to bundle `./index.scss`
 import './index.scss';
@@ -10,10 +17,11 @@ import './index.scss';
 class MyFlixApplication extends React.Component {
   render() {
     return (
-      <Container>
-         <MainView />
-      </Container>
-      
+      <Provider store={store}>
+        <Container>
+          <MainView />
+        </Container>
+      </Provider>
     );
   }
 }
