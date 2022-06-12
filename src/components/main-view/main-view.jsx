@@ -24,11 +24,11 @@ class MainView extends React.Component {
     // constructor method is used to create component.
     super(); // related to OOP which initilazes the component's state.
     //This code is executed as soon as component is created.
-    this.state = {
-      selectedMovie: null,
+    //this.state = {
+    //selectedMovie: null,
 
-      register: null,
-    };
+    //register: null,
+    //};
   }
   // Makin the login data to be present even after a refresh.
   componentDidMount() {
@@ -49,9 +49,9 @@ class MainView extends React.Component {
 
   onLoggedIn(authData) {
     const { setUser } = this.props;
-    setUser(authData.user.username);
+    setUser(authData.user.Username);
     localStorage.setItem('token', authData.token);
-    localStorage.setItem('user', authData.user.username);
+    localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
   }
 
@@ -67,19 +67,6 @@ class MainView extends React.Component {
       .catch(error => {
         console.log(error);
       });
-  }
-
-  onLoggedOut() {
-    const { setUser } = this.props;
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setUser(null);
-  }
-
-  onRegister(register) {
-    this.setState({
-      register,
-    });
   }
 
   render() {
