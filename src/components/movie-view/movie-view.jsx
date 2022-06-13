@@ -1,42 +1,49 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+
+import { Button, Col, Container, Row } from 'react-bootstrap/';
+
 export class MovieView extends React.Component {
   render() {
     const { movie, onBackClick } = this.props;
 
     return (
-      <div className="movie-view">
-        <div className="movie-poster">
+      <Container className="movie-view">
+        <Row className="movie-poster">
           <img src={movie.ImagePath} />
-        </div>
-        <div className="movie-title">
-          <span className="label">Title: </span>
-          <span className="value">{movie.Title}</span>
-        </div>
-        <div className="movie-description">
-          <span className="label">Description: </span>
-          <span className="value">{movie.Description}</span>
-        </div>
+        </Row>
+        <Row className="movie-title">
+          <Col className="label">Title: </Col>
+          <Col className="value">{movie.Title}</Col>
+        </Row>
+        <Row className="movie-description">
+          <Col className="label">Description: </Col>
+          <Col className="value">{movie.Description}</Col>
+        </Row>
 
-        <div className="Director">
+        <Row className="Director">
           <Link to={`/directors/${movie.Director.Name}`}>
-            <Button variant="link">Director</Button>
+            <Button className="d-block mt-3" variant="info">
+              Director
+            </Button>
           </Link>
-        </div>
-        <div className="Genre">
+        </Row>
+        <Row className="Genre">
           <Link to={`/genres/${movie.Genre.Name}`}>
-            <Button variant="link">Genre</Button>
+            <Button className="d-block mt-3" variant="info">
+              Genre
+            </Button>
           </Link>
-        </div>
+        </Row>
         <Button
+          className="d-block mt-3"
           onClick={() => {
             onBackClick();
           }}
         >
           Back
         </Button>
-      </div>
+      </Container>
     );
   }
 }

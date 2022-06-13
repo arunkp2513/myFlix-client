@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+
+import { Form } from 'react-bootstrap';
 
 export default function UpdateUser(props) {
   const { user } = props;
@@ -31,39 +34,46 @@ export default function UpdateUser(props) {
       });
   };
   return (
-    <form className="profile-form">
-      <h2>Do yo want to update your info?</h2>
-      <p>Please entire all the fields</p>
-      <label>Username:</label>
-      <input
-        type="text"
-        name="Username"
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-        placeholder="Username"
-        required
-      />
-      <label>Password</label>
-      <input
-        type="password"
-        name="password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        placeholder="Password"
-        required
-      />
-      <label>Email-address</label>
-      <input
-        type="email"
-        name="email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        placeholder="your@mail.com"
-        required
-      />
-      <button variant="warning" onClick={handleSubmit}>
+    <Form>
+      <Form.Group className="mb-3" controlId="formUsername">
+        <h4>Do yo want to update your info?</h4>
+        <p>Please entire all the fields</p>
+        <Form.Label>Username:</Form.Label>
+        <Form.Control
+          type="text"
+          name="Username"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          placeholder="Username"
+          required
+        />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formPassword">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
+          name="password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          placeholder="Password"
+          required
+        />
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Email-address</Form.Label>
+        <Form.Control
+          type="email"
+          name="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          placeholder="your@mail.com"
+          required
+        />
+      </Form.Group>
+
+      <Button variant="warning" onClick={handleSubmit}>
         Update you profile
-      </button>
-    </form>
+      </Button>
+    </Form>
   );
 }

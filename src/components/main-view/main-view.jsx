@@ -30,7 +30,7 @@ class MainView extends React.Component {
     //register: null,
     //};
   }
-  // Makin the login data to be present even after a refresh.
+  // Making the login data to be present even after a refresh.
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {

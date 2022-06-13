@@ -8,11 +8,15 @@ import FavoriteMovies from './favorite-movies';
 import UpdateUser from './update-user';
 import { setUser, updateUser } from '../../actions/actions';
 import { connect } from 'react-redux';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Card from 'react-bootstrap/Card';
 
 export function ProfileView(props) {
   const [user, setUser] = useState(props.user);
-
-  const [favoriteMoviesList, setFavoriteMoviesList] = useState([]);
+  const [movies, setMovies] = useState(props.movies);
+  const [favoriteMovies, setFavoriteMovies] = useState([]);
 
   const token = localStorage.getItem('token');
   const currentUser = localStorage.getItem('user');
@@ -24,7 +28,7 @@ export function ProfileView(props) {
       })
       .then(response => {
         setUser(response.data);
-        setFavoriteMoviesList(response.data.FavoriteMovies);
+        setFavoriteMovies(response.data.FavoriteMovies);
       })
       .catch(error => console.error(error));
   };
@@ -35,10 +39,8 @@ export function ProfileView(props) {
         `https://myflix2513.herokuapp.com/users/${currentUser.userName}/movies/${id}`
       )
       .then(() => {
-        const newFavourites = favoriteMoviesList.filter(
-          movie => movie._id != id
-        );
-        setFavoriteMoviesList(newFavourites);
+        const newFavourites = favoriteMovies.filter(movie => movie._id != id);
+        setFavoriteMovies(newFavourites);
       })
       .catch(e => {
         console.log(e);
@@ -63,17 +65,34 @@ export function ProfileView(props) {
   };
 
   return (
-    <div>
-      <UserInfo user={user} />
+    <Container>
+      <Row>
+        <Col>
+          <Card>
+            <Card.Body>
+              <UserInfo user={user} />
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Card>
+            <Card.Body>
+              <UpdateUser user={user} />
+              <Button variant="danger" type="submit" onClick={deleteProfile}>
+                Delete Profile
+              </Button>
+              <Link to={`/`}> Back to Movies</Link>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
       <FavoriteMovies
-        favouriteMovieList={favoriteMoviesList}
+        movies={movies}
+        favoriteMovies={favoriteMovies}
         removeFav={removeFav}
       />
-      <UpdateUser user={user} />
-      <Button variant="danger" type="submit" onClick={deleteProfile}>
-        Delete Profile
-      </Button>
-      <Link to={`/`}> Back to Movies</Link>
-    </div>
+    </Container>
   );
 }
