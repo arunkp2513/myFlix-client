@@ -28,23 +28,10 @@ export function ProfileView(props) {
       })
       .then(response => {
         setUser(response.data);
+        console.log('movies =', response.data);
         setFavoriteMovies(response.data.FavoriteMovies);
       })
       .catch(error => console.error(error));
-  };
-
-  const removeFav = id => {
-    axios
-      .delete(
-        `https://myflix2513.herokuapp.com/users/${currentUser.userName}/movies/${id}`
-      )
-      .then(() => {
-        const newFavourites = favoriteMovies.filter(movie => movie._id != id);
-        setFavoriteMovies(newFavourites);
-      })
-      .catch(e => {
-        console.log(e);
-      });
   };
 
   useEffect(() => {
@@ -63,7 +50,7 @@ export function ProfileView(props) {
       })
       .catch(error => console.error(error));
   };
-
+  console.log('favourite', favoriteMovies);
   return (
     <Container>
       <Row>
@@ -91,7 +78,7 @@ export function ProfileView(props) {
       <FavoriteMovies
         movies={movies}
         favoriteMovies={favoriteMovies}
-        removeFav={removeFav}
+        currentUser={currentUser}
       />
     </Container>
   );

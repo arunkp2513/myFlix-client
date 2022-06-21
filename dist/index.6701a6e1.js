@@ -44541,18 +44541,10 @@ function ProfileView(props) {
             }
         }).then((response)=>{
             setUser(response.data);
+            console.log('movies =', response.data);
             setFavoriteMovies(response.data.FavoriteMovies);
         }).catch((error)=>console.error(error)
         );
-    };
-    const removeFav = (id)=>{
-        _axiosDefault.default.delete(`https://myflix2513.herokuapp.com/users/${currentUser.userName}/movies/${id}`).then(()=>{
-            const newFavourites = favoriteMovies.filter((movie)=>movie._id != id
-            );
-            setFavoriteMovies(newFavourites);
-        }).catch((e)=>{
-            console.log(e);
-        });
     };
     _react.useEffect(()=>{
         getUser();
@@ -44569,42 +44561,43 @@ function ProfileView(props) {
         }).catch((error)=>console.error(error)
         );
     };
+    console.log('favourite', favoriteMovies);
     return(/*#__PURE__*/ _jsxRuntime.jsxs(_containerDefault.default, {
         __source: {
             fileName: "src/components/profile-view/profile-view.jsx",
-            lineNumber: 68
+            lineNumber: 55
         },
         __self: this,
         children: [
             /*#__PURE__*/ _jsxRuntime.jsx(_rowDefault.default, {
                 __source: {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 69
+                    lineNumber: 56
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
                     __source: {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 70
+                        lineNumber: 57
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default, {
                         __source: {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 71
+                            lineNumber: 58
                         },
                         __self: this,
                         children: /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Body, {
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 72
+                                lineNumber: 59
                             },
                             __self: this,
                             children: /*#__PURE__*/ _jsxRuntime.jsx(_userInfoDefault.default, {
                                 user: user,
                                 __source: {
                                     fileName: "src/components/profile-view/profile-view.jsx",
-                                    lineNumber: 73
+                                    lineNumber: 60
                                 },
                                 __self: this
                             })
@@ -44615,25 +44608,25 @@ function ProfileView(props) {
             /*#__PURE__*/ _jsxRuntime.jsx(_rowDefault.default, {
                 __source: {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 78
+                    lineNumber: 65
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
                     __source: {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 79
+                        lineNumber: 66
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default, {
                         __source: {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 80
+                            lineNumber: 67
                         },
                         __self: this,
                         children: /*#__PURE__*/ _jsxRuntime.jsxs(_cardDefault.default.Body, {
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 81
+                                lineNumber: 68
                             },
                             __self: this,
                             children: [
@@ -44641,7 +44634,7 @@ function ProfileView(props) {
                                     user: user,
                                     __source: {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 82
+                                        lineNumber: 69
                                     },
                                     __self: this
                                 }),
@@ -44651,7 +44644,7 @@ function ProfileView(props) {
                                     onClick: deleteProfile,
                                     __source: {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 83
+                                        lineNumber: 70
                                     },
                                     __self: this,
                                     children: "Delete Profile"
@@ -44660,7 +44653,7 @@ function ProfileView(props) {
                                     to: `/`,
                                     __source: {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 86
+                                        lineNumber: 73
                                     },
                                     __self: this,
                                     children: " Back to Movies"
@@ -44673,10 +44666,10 @@ function ProfileView(props) {
             /*#__PURE__*/ _jsxRuntime.jsx(_favoriteMoviesDefault.default, {
                 movies: movies,
                 favoriteMovies: favoriteMovies,
-                removeFav: removeFav,
+                currentUser: currentUser,
                 __source: {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 91
+                    lineNumber: 78
                 },
                 __self: this
             })
@@ -44765,24 +44758,35 @@ var _jsxRuntime = require("react/jsx-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _reactRouterDom = require("react-router-dom");
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
 function FavoriteMovies(props) {
-    const { movies , favoriteMovies  } = props;
-    const favouriteMoviesId = favoriteMovies.map((m)=>m._id
-    );
+    const { movies , favoriteMovies , currentUser  } = props;
+    const removeFav = (id)=>{
+        _axiosDefault.default.delete(`https://myflix2513.herokuapp.com/users/${currentUser.userName}/movies/${id}`).then(()=>{
+            const newFavourites = favoriteMovies.filter((movie)=>movie._id != id
+            );
+            setFavoriteMovies(newFavourites);
+        }).catch((e)=>{
+            console.log(e);
+        });
+    };
+    // const favouriteMoviesId = favoriteMovies.map(m => m._id);
+    // console.log('ID', favouriteMoviesId);
     const favouriteMoviesList = movies.filter((m)=>{
-        return favouriteMoviesId.includes(m._id);
+        return favoriteMovies.includes(m._id);
     });
     return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
         __source: {
             fileName: "src/components/profile-view/favorite-movies.jsx",
-            lineNumber: 14
+            lineNumber: 27
         },
         __self: this,
         children: [
             /*#__PURE__*/ _jsxRuntime.jsx("h2", {
                 __source: {
                     fileName: "src/components/profile-view/favorite-movies.jsx",
-                    lineNumber: 15
+                    lineNumber: 28
                 },
                 __self: this,
                 children: "Favorite Movies:"
@@ -44791,7 +44795,7 @@ function FavoriteMovies(props) {
                 return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
                     __source: {
                         fileName: "src/components/profile-view/favorite-movies.jsx",
-                        lineNumber: 19
+                        lineNumber: 32
                     },
                     __self: this,
                     children: [
@@ -44799,7 +44803,7 @@ function FavoriteMovies(props) {
                             src: movies1.ImagePath,
                             __source: {
                                 fileName: "src/components/profile-view/favorite-movies.jsx",
-                                lineNumber: 20
+                                lineNumber: 33
                             },
                             __self: this
                         }),
@@ -44807,9 +44811,17 @@ function FavoriteMovies(props) {
                             to: `/movies/${movies1._id}`,
                             __source: {
                                 fileName: "src/components/profile-view/favorite-movies.jsx",
-                                lineNumber: 21
+                                lineNumber: 34
                             },
                             __self: this
+                        }),
+                        /*#__PURE__*/ _jsxRuntime.jsx("h2", {
+                            __source: {
+                                fileName: "src/components/profile-view/favorite-movies.jsx",
+                                lineNumber: 35
+                            },
+                            __self: this,
+                            children: movies1.Title
                         }),
                         /*#__PURE__*/ _jsxRuntime.jsx("button", {
                             variant: "secondary",
@@ -44817,7 +44829,7 @@ function FavoriteMovies(props) {
                             ,
                             __source: {
                                 fileName: "src/components/profile-view/favorite-movies.jsx",
-                                lineNumber: 22
+                                lineNumber: 36
                             },
                             __self: this,
                             children: "Remove from your list"
@@ -44838,7 +44850,7 @@ $RefreshReg$(_c, "FavoriteMovies");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","@parcel/transformer-js/src/esmodule-helpers.js":"4JSGq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"acbzt"}],"hBcEf":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","@parcel/transformer-js/src/esmodule-helpers.js":"4JSGq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"acbzt","axios":"iYoWk"}],"hBcEf":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$f560 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -45024,7 +45036,7 @@ $RefreshReg$(_c, "UpdateUser");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"4JSGq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"acbzt","axios":"iYoWk","react-bootstrap":"h2YVd","react-bootstrap/Button":"9CzHT"}],"1Ttfj":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"4JSGq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"acbzt","axios":"iYoWk","react-bootstrap/Button":"9CzHT","react-bootstrap":"h2YVd"}],"1Ttfj":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "SET_MOVIES", ()=>SET_MOVIES
